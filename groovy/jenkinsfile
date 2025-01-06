@@ -1,0 +1,25 @@
+pipeline{
+    agent{
+        docker {
+            image 'alpine:latest'
+        }
+    }
+
+    stages {
+        stage('Hello World') {
+            steps {
+                sh 'echo "Hello, World!"'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'pipeline excuted successfully!'
+        }
+        failure {
+            echo 'Pipleline failed. Check logs.'
+        }
+    }
+
+}
