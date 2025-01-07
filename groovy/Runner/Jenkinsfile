@@ -1,15 +1,33 @@
 pipeline{
-    agent{
-        dockerContainer {
-            image 'alpine:latest'
-        }
+    agent any
+    environment {
+        DOCKER_IMAGE = "hello_world"
     }
 
     stages {
-        stage('Hello World') {
+        stage('Checkout Repo') {
             steps {
-                sh 'echo "Hello, World!"'
+                checkout scm
             }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("${DOCKER_IMAGE}", ".")
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    docker.image("${DOCKER_IMAGE}").inside {
+                        sh 'Echo running inside Docker Container'
+                    }
+                }
+            }
+
         }
     }
 
@@ -19,6 +37,9 @@ pipeline{
         }
         failure {
             echo 'Pipleline failed. Check logs.'
+        }
+        always {
+            cleanWS()
         }
     }
 
