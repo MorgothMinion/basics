@@ -39,7 +39,14 @@ pipeline{
             echo 'Pipleline failed. Check logs.'
         }
         always {
-            cleanWS()
+            cleanWs()
+            script {
+                try {
+                    docker.image("${DOCKER_IMAGE}").remove()
+                } catch (Exception e) {
+                    echo "Error removing Docker image: ${e.message}"
+                }
+            }
         }
     }
 
