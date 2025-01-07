@@ -14,7 +14,7 @@ pipeline{
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}", ".")
+                    docker.build("${DOCKER_IMAGE}", "./groovy/Runner")
                 }
             }
         }
@@ -40,13 +40,6 @@ pipeline{
         }
         always {
             cleanWs()
-            script {
-                try {
-                    docker.image("${DOCKER_IMAGE}").remove()
-                } catch (Exception e) {
-                    echo "Error removing Docker image: ${e.message}"
-                }
-            }
         }
     }
 
