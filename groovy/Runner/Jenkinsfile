@@ -23,7 +23,7 @@ pipeline{
             steps {
                 script {
                     docker.image("${DOCKER_IMAGE}").inside {
-                        sh 'Echo running inside Docker Container'
+                        sh 'echo running inside Docker Container'
                     }
                 }
             }
