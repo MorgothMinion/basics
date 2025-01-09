@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    environment {
+        NODE_IP = "192.168.68.61"
+    }
+    stages {
+        stage("Update OS") {
+            steps {
+                script {
+                    sh 'ssh -t root@${NODE_IP} "yum update -y"'
+                }
+
+            }
+        }
+
+        stage("Install packages") {
+            steps {
+                
+            }
+        }
+    }
+}
