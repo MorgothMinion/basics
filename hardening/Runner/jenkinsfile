@@ -8,7 +8,7 @@ pipeline {
         stage("Update OS") {
             steps {
                 script {
-                    sh 'ssh -t root@${NODE_IP} "yum update -y"'
+                    sh 'ssh root@${NODE_IP} "yum update -y"'
                 }
 
             }
