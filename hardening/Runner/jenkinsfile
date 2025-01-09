@@ -16,6 +16,8 @@ pipeline {
 
         stage("Install packages") {
             steps {
+
+                sh "echo 'Finished'"
                 
             }
         }
