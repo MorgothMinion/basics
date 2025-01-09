@@ -4,11 +4,16 @@ pipeline {
     environment {
         NODE_IP = "192.168.68.61"
     }
+
+    credentials {
+
+    }
     stages {
         stage("Update OS") {
             steps {
                 script {
-                    sh 'ssh -o StrictHostKeyChecking=no root@${NODE_IP} "cat /etc/hostname"'
+                    sshagent(['']) {
+                    sh 'ssh -o StrictHostKeyChecking=no root@${NODE_IP} "yum update -y"'
                 }
 
             }
