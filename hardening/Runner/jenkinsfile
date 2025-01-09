@@ -15,8 +15,8 @@ pipeline {
                     sshagent(['']) {
                     sh 'ssh -o StrictHostKeyChecking=no root@${NODE_IP} "yum update -y"'
                 }
-
             }
+         }
         }
 
         stage("Install packages") {
