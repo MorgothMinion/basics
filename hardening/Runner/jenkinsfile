@@ -16,42 +16,43 @@ pipeline {
 
         stage("Install docker") {
             steps {
-
-                sh '''
-                ssh -o StrictHostKeyChecking=no root@${NODE_IP} <<EOF
-                yum install docker -y 
-                systemctl enable docker
-                systemctl start docker
-                EOF
-                '''
+                script {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no root@${NODE_IP}
+                    yum install docker -y 
+                    systemctl enable docker
+                    systemctl start docker
+                    '''
+                }
             }
         }
 
         stage("Install kubectl") {
             steps {
 
+                script {
                 sh '''
-                ssh -o StrictHostKeyChecking=no root@${NODE_IP} <<EOF
-                curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-                chmod +x kubectl
-                mv kubectl /usr/local/bin/
-                kubectl version --client
-                EOF
-                '''            
+                    ssh -o StrictHostKeyChecking=no root@${NODE_IP}
+                    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                    chmod +x kubectl
+                    mv kubectl /usr/local/bin/
+                    kubectl version --client
+                    '''
+                    }       
                 }
         }
 
         stage("Install kind") {
             steps {
-
-                sh '''
-                ssh -o StrictHostKeyChecking=no root@${NODE_IP} <<EOF
-                curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
-                chmod +x ./kind
-                mv ./kind /usr/local/bin/
-                kind version
-                EOF
-                '''
+                script {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no root@${NODE_IP}
+                    curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+                    chmod +x ./kind
+                    mv ./kind /usr/local/bin/
+                    kind version
+                    '''
+                }
             }
         }
     }
