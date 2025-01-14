@@ -18,12 +18,12 @@ pipeline {
             steps {
 
                 sh '''
-                    ssh -o StrictHostKeyChecking=no root@${NODE_IP} << EOF
-                    yum install docker -y 
-                    systemctl enable docker
-                    systemctl start docker
-                    EOF
-                    '''
+                ssh -o StrictHostKeyChecking=no root@${NODE_IP} << EOF
+                yum install docker -y 
+                systemctl enable docker
+                systemctl start docker
+                EOF
+                '''
             }
         }
 
@@ -31,12 +31,12 @@ pipeline {
             steps {
 
                 sh '''
-                    ssh -o StrictHostKeyChecking=no root@${NODE_IP} << EOF
-                    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-                    chmod +x kubectl
-                    mv kubectl /usr/local/bin/
-                    kubectl version --client
-                    EOF
+                ssh -o StrictHostKeyChecking=no root@${NODE_IP} << EOF
+                curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                chmod +x kubectl
+                mv kubectl /usr/local/bin/
+                kubectl version --client
+                EOF
                 '''            
                 }
         }
@@ -45,12 +45,12 @@ pipeline {
             steps {
 
                 sh '''
-                    ssh -o StrictHostKeyChecking=no root@${NODE_IP} << EOF
-                    curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
-                    chmod +x ./kind
-                    mv ./kind /usr/local/bin/
-                    kind version
-                    EOF
+                ssh -o StrictHostKeyChecking=no root@${NODE_IP} << EOF
+                curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+                chmod +x ./kind
+                mv ./kind /usr/local/bin/
+                kind version
+                EOF
                 '''
             }
         }
