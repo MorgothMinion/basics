@@ -19,8 +19,8 @@ pipeline {
                 script {
                     sh '''
                     ssh -o StrictHostKeyChecking=no root@${NODE_IP} "
-                    yum install docker -y 
-                    systemctl enable docker
+                    yum install docker -y &&
+                    systemctl enable docker &&
                     systemctl start docker
                     "
                     '''
@@ -33,11 +33,12 @@ pipeline {
 
                 script {
                 sh '''
-                    ssh -o StrictHostKeyChecking=no root@${NODE_IP}
-                    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-                    chmod +x kubectl
-                    mv kubectl /usr/local/bin/
+                    ssh -o StrictHostKeyChecking=no root@${NODE_IP} "
+                    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" &&
+                    chmod +x kubectl &&
+                    mv kubectl /usr/local/bin/ &&
                     kubectl version --client
+                    "
                     '''
                     }       
                 }
@@ -47,11 +48,12 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no root@${NODE_IP}
-                    curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
-                    chmod +x ./kind
-                    mv ./kind /usr/local/bin/
+                    ssh -o StrictHostKeyChecking=no root@${NODE_IP} "
+                    curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64 &&
+                    chmod +x ./kind &&
+                    mv ./kind /usr/local/bin/ &&
                     kind version
+                    "
                     '''
                 }
             }
