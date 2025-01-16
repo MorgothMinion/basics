@@ -11,15 +11,12 @@ pipeline {
         stage('Run Unittests') {
             steps {
                 // Run the unittests
-                sh 'python -m unittest discover -s tests'
+                sh 'python groovy/test_addition.py'
             }
         }
     }
     post {
-        always {
-            // Archive test results for Jenkins
-            junit '**/test-results/*.xml'
-        }
+        
         failure {
             // Mark build as failed if tests fail
             echo 'Unittests failed. PR validation unsuccessful.'
