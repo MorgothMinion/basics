@@ -1,1 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clone the repository
+                git branch: 'main', url: 'https://github.com/MorgothMinion/basics.git'
+            }
+        }
 
+        stage('Run Unittests') {
+            steps {
+                // Run the unittests
+                sh 'python groovy/test_addition.py'
+            }
+        }
+    }
+    post {
+        
+        failure {
+            // Mark build as failed if tests fail
+            echo 'Unittests failed. PR validation unsuccessful.'
+        }
+    }
+}
